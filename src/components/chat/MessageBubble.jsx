@@ -71,7 +71,7 @@ export default function MessageBubble({
         {/* Dropdown menú */}
         {menuOpen && isOwn && (
           <div className="absolute right-2 top-8 z-10 bg-white text-slate-800 text-xs rounded-lg shadow-lg w-44">
-            {/* Importante */}
+            {/* Destacar */}
             <button
               className="w-full px-3 py-2 hover:bg-slate-100 flex items-center gap-2"
               onClick={() => {
@@ -80,7 +80,7 @@ export default function MessageBubble({
               }}
             >
               <Star className="w-4 h-4 text-yellow-400" />
-              {important ? "Quitar importante" : "Marcar importante"}
+              {important ? "No destacar" : "Destacar"}
             </button>
 
             <div className="border-t my-1" />
@@ -118,7 +118,7 @@ export default function MessageBubble({
         <div className="flex items-center justify-end gap-2 mt-2 text-[11px] opacity-80">
           <span>{time}</span>
 
-          {/* Etiqueta (solo si existe) */}
+          {/* Etiqueta */}
           {renderTag()}
 
           {/* Estrella */}
@@ -133,6 +133,7 @@ export default function MessageBubble({
     </div>
   );
 }
+
 
 
 
