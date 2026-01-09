@@ -7,7 +7,7 @@ export default function MessageBubble({
   sender,
   isOwn = false,
   status = "sent", // sent | delivered | read
-  tag: initialTag,
+  tag: initialTag = null, // "urgent" | "important" | null
   important: initialImportant = false,
 }) {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -29,15 +29,33 @@ export default function MessageBubble({
     return null;
   };
 
+  const renderTag = () => {
+    if (!tag) return null;
+
+    if (tag === "urgent") {
+      return (
+        <span className="px-2 py-0.5 rounded-full bg-sky-100 text-sky-700 text-[10px] font-medium">
+          Urgente
+        </span>
+      );
+    }
+
+    if (tag === "important") {
+      return (
+        <span className="px-2 py-0.5 rounded-full bg-yellow-100 text-yellow-700 text-[10px] font-medium">
+          Importante
+        </span>
+      );
+    }
+
+    return null;
+  };
+
   return (
     <div className={`flex ${isOwn ? "justify-end" : "justify-start"} mb-4`}>
       <div
         className={`relative max-w-[70%] rounded-2xl px-4 py-3 text-sm
-        ${
-          isOwn
-            ? "bg-blue-500 text-white"
-            : "bg-slate-200 text-slate-800"
-        }`}
+        ${isOwn ? "bg-blue-500 text-white" : "bg-slate-200 text-slate-800"}`}
       >
         {/* Header (solo enviados) */}
         {isOwn && (
@@ -50,9 +68,10 @@ export default function MessageBubble({
           </div>
         )}
 
-        {/* Dropdown */}
+        {/* Dropdown menú */}
         {menuOpen && isOwn && (
-          <div className="absolute right-2 top-8 z-10 bg-white text-slate-800 text-xs rounded-lg shadow-lg w-40">
+          <div className="absolute right-2 top-8 z-10 bg-white text-slate-800 text-xs rounded-lg shadow-lg w-44">
+            {/* Importante */}
             <button
               className="w-full px-3 py-2 hover:bg-slate-100 flex items-center gap-2"
               onClick={() => {
@@ -66,18 +85,29 @@ export default function MessageBubble({
 
             <div className="border-t my-1" />
 
-            {["Urgente", "Normal", "VIP"].map((label) => (
-              <button
-                key={label}
-                className="w-full px-3 py-2 hover:bg-slate-100 text-left"
-                onClick={() => {
-                  setTag(label);
-                  setMenuOpen(false);
-                }}
-              >
-                {label}
-              </button>
-            ))}
+            {/* Urgente */}
+            <button
+              className="w-full px-3 py-2 hover:bg-slate-100 text-left"
+              onClick={() => {
+                setTag(tag === "urgent" ? null : "urgent");
+                setMenuOpen(false);
+              }}
+            >
+              {tag === "urgent" ? "Quitar urgente" : "Marcar urgente"}
+            </button>
+
+            {/* Importante como etiqueta */}
+            <button
+              className="w-full px-3 py-2 hover:bg-slate-100 text-left"
+              onClick={() => {
+                setTag(tag === "important" ? null : "important");
+                setMenuOpen(false);
+              }}
+            >
+              {tag === "important"
+                ? "Quitar etiqueta importante"
+                : "Etiqueta importante"}
+            </button>
           </div>
         )}
 
@@ -88,16 +118,15 @@ export default function MessageBubble({
         <div className="flex items-center justify-end gap-2 mt-2 text-[11px] opacity-80">
           <span>{time}</span>
 
-          {tag && (
-            <span className="px-2 py-0.5 rounded-full bg-white/20">
-              {tag}
-            </span>
-          )}
+          {/* Etiqueta (solo si existe) */}
+          {renderTag()}
 
+          {/* Estrella */}
           {important && (
             <Star className="w-4 h-4 text-yellow-300 fill-yellow-300" />
           )}
 
+          {/* Checks */}
           {isOwn && renderStatusIcon()}
         </div>
       </div>
