@@ -1,6 +1,6 @@
 import { MessageCircle, Instagram, Facebook } from "lucide-react";
 
-/* 🔹 ICONOS DE RED SOCIAL (DEBEN IR ARRIBA) */
+/* 🔹 ICONOS DE RED SOCIAL */
 const socialIcons = {
   whatsapp: <MessageCircle className="w-4 h-4 text-green-500" />,
   instagram: <Instagram className="w-4 h-4 text-pink-500" />,
@@ -11,7 +11,6 @@ export default function ChatHeader() {
   // datos mock (luego vienen de backend)
   const social = "whatsapp"; // whatsapp | instagram | facebook
   const clientType = "VIP";
-  const priority = "Urgente";
 
   return (
     <header className="flex items-center justify-between px-4 py-3 border-b border-slate-200 bg-white">
@@ -36,12 +35,25 @@ export default function ChatHeader() {
             </span>
 
             {/* Clasificación fija */}
-            <span className="px-2 py-0.5 text-xs rounded bg-blue-100 text-blue-700">
+            <span className="px-2 py-0.5 text-xs rounded bg-blue-100 text-blue-700 font-medium">
               {clientType}
             </span>
 
-            {/* Clasificación editable */}
-            <select className="text-xs bg-orange-100 text-orange-700 rounded px-2 py-0.5 outline-none">
+            {/* Clasificación editable (ACTUALIZADA A CELESTE) */}
+            <select
+              className="
+                text-xs
+                bg-sky-100
+                text-sky-700
+                border border-sky-200
+                rounded-full
+                px-2 py-0.5
+                font-medium
+                outline-none
+                focus:ring-2
+                focus:ring-sky-300
+              "
+            >
               <option>Urgente</option>
               <option>Normal</option>
               <option>Seguimiento</option>
